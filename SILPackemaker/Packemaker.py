@@ -7,9 +7,6 @@ import PacingLogic
 import PanTompkins
 import RateModulator
 
-
-
-
 class PacemakerDevice:
     def __init__(self,NBG_code = "VVIR", sampling_rate = 200):
           
@@ -18,6 +15,8 @@ class PacemakerDevice:
         # Check index 3 (4th letter) for 'R' --> Rate Modulation Closed Loop system
         use_adaptive_rate_modulation = (len(NBG_code) > 3) and (NBG_code[3] == "R")
         self.rate_modulator = RateModulator(adaptive = use_adaptive_rate_modulation, sampling_rate = sampling_rate)
+
+    #helper method convering bpm to bpsamplingrate
 
     def step(self, ecg_signal, sensor_signal = None):
         '''
@@ -31,7 +30,7 @@ class PacemakerDevice:
         is_heart_beat = self.detector.step(ecg_signal) 
 
         # modulate rate based on activity from sensor_signal
-        rate = self.rate_modulator.step(sensor_signal,)
+        rate = self.rate_modulator.step(sensor_signal)
 
         # decide whether we need pacing based on the pacemaker configuration
         new_pace = self.logic.step(is_heart_beat,rate)
