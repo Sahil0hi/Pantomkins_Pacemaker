@@ -1,0 +1,8 @@
+# Requirements for QRS Pacemaker Animation
+numpy>=1.21.0
+matplotlib>=3.5.0
+opencv-python>=4.5.0
+wfdb>=4.0.0
+
+# Optional but recommended for better performance
+scipy>=1.7.0
