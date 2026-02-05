@@ -2,7 +2,7 @@
 
 This project implements a comprehensive simulation of a **VVIR Pacemaker** integrated with a real-time **Pan-Tompkins QRS detection algorithm**. It allows for the simulation of cardiac sensing, pacing logic, and rate modulation, accompanied by a rich visualization dashboard.
 
-## 🎯 Project Overview
+##  Project Overview
 
 The system is designed to simulate a closed-loop biomedical device:
 1.  **Sensing**: It processes raw ECG signals to detect R-peaks (heartbeats) using a C-optimized implementation of the Pan-Tompkins algorithm.
@@ -13,7 +13,7 @@ The system is designed to simulate a closed-loop biomedical device:
     *   **R**ate Modulation (adjusts pacing rate based on simulated activity)
 3.  **Visualization**: A real-time dashboard plots the ECG trace, pacemaker status (Sensing vs. Pacing), and instantaneous heart rate, synchronized with a video animation of a beating heart.
 
-## 🚀 Key Features
+##  Key Features
 
 *   **High-Performance QRS Detection**: Uses a compiled C shared library (`libpantompkins.so`) for efficient real-time signal processing (Bandpass filter, derivative, squaring, moving window integration).
 *   **Pacemaker Modes**: 
@@ -26,7 +26,7 @@ The system is designed to simulate a closed-loop biomedical device:
     *   Synchronized heart video playback.
 *   **Simulation Support**: Can run simulations against synthetic data or standard MIT-BIH arrhythmia database records.
 
-## 📂 Project Structure
+##  Project Structure
 
 *   **`SILPackemaker/`**: Contains the core Python implementation of the pacemaker.
     *   `Pacemaker.py`: Main device class handling the step-by-step simulation.
@@ -39,7 +39,7 @@ The system is designed to simulate a closed-loop biomedical device:
 *   **`simulate.py`**: Script to run simulations on MIT-BIH database files.
 *   **`Assests/`**: Contains media assets for visualization (e.g., `heart2.mp4`).
 
-## 🛠️ Installation
+##  Installation
 
 1.  **Clone the repository**:
     ```bash
@@ -61,7 +61,7 @@ The system is designed to simulate a closed-loop biomedical device:
     gcc -shared -o libpantompkins.so -fPIC panTompkins.c
     ```
 
-## 🎮 Usage
+##  Usage
 
 ### 1. Run the Heart Visualization Demo
 This is the main showcase of the project, displaying the ECG and Pacemaker status in real-time.
@@ -76,7 +76,7 @@ python simulate.py
 ```
 *(Note: Requires internet access to download MIT-BIH records via `wfdb`)*
 
-## 📚 References
+##  References
 
 *   **Pan-Tompkins Algorithm**: Pan, J., & Tompkins, W. J. (1985). "A real-time QRS detection algorithm." *IEEE Transactions on Biomedical Engineering*, 32(10), 230–236.
 *   **Base Implementation**: [PanTompkinsQRS by rafaelmmoreira](https://github.com/rafaelmmoreira/PanTompkinsQRS)
