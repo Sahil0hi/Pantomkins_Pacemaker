@@ -100,7 +100,7 @@ def animate_simulation_with_video(fs, ecg, sensed_beats, paced_beats, rate_trace
     # BPM panel (bottom)
     ax_bpm = fig.add_subplot(313)
     ax_bpm.set_xlim(0, WINDOW_SIZE)
-    ax_bpm.set_ylim(40, 120)
+    ax_bpm.set_ylim(40, 180)
     ax_bpm.set_ylabel("Heart Rate (BPM)")
     ax_bpm.set_xlabel("Time (s)")
     ax_bpm.set_title("Real-time Heart Rate")

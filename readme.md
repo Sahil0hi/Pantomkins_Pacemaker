@@ -1,22 +1,82 @@
-This project aims to design and evaluate a signal-processing pipeline capable of detecting irregular QRS complexes from raw ecg signals based on the paper by Pan-tompking1. The primary goal is to extract accurate R-peak locations and timing characteristics (RR intervals, variability patterns, and abnormal beat signatures) directly from raw ECG recordings. These timing metrics will then be mapped onto simplified pacemaker-relevant decision logic to simulate how a pacemaker interprets irregular cardiac rhythms, inhibits or triggers pacing, and maintains stable heart rhythm during abnormal events. Our plan is to implement preprocessing filters, develop a robust Pan–Tompkins QRS detector, compute irregularity metrics, and integrate these outputs into a pacing-decision model.  
+# QRS Pacemaker Simulation
 
-Process
-We take in a raw electrocardiogram (ECG) response and apply the approach described in A Real Time QRS-Detection Algorithm to detect the onset and duration of QRS complexes (the depolarization of the ventricle of the heart post-contraction). The Pan-Tompkins algorithm applies a bandpass filter to the raw signal to place it in the ideal passband for detection, followed by differentiation and squaring to capture the rate of change and ensure only positive values appear. The next step involves a moving-average filter to smooth sharp edges, followed by a peak detector that detects a peak within a specific window. The second stage of our project implements the pacemaker project, which is designed as a closed-loop feedback system. For implementation, we can initialize a discrete-time counter t and count up towards a desired tdesired. If the heart has not naturally fired, we enter a discrete-time delta function to force the heart to contract and induce depolarization. Conversely, if the heart beats before the timer reaches the desired time limit for the intended frequency, then reset the timer. We plan to test this open-source ECG data from Kaggle and other sources.
+This project implements a comprehensive simulation of a **VVIR Pacemaker** integrated with a real-time **Pan-Tompkins QRS detection algorithm**. It allows for the simulation of cardiac sensing, pacing logic, and rate modulation, accompanied by a rich visualization dashboard.
 
+## 🎯 Project Overview
 
+The system is designed to simulate a closed-loop biomedical device:
+1.  **Sensing**: It processes raw ECG signals to detect R-peaks (heartbeats) using a C-optimized implementation of the Pan-Tompkins algorithm.
+2.  **Logic**: It implements standard pacemaker timing cycles (NBG Code: **VVIR**):
+    *   **V**entricle Paced
+    *   **V**entricle Sensed
+    *   **I**nhibited Response (resets timer on natural beat)
+    *   **R**ate Modulation (adjusts pacing rate based on simulated activity)
+3.  **Visualization**: A real-time dashboard plots the ECG trace, pacemaker status (Sensing vs. Pacing), and instantaneous heart rate, synchronized with a video animation of a beating heart.
 
+## 🚀 Key Features
 
+*   **High-Performance QRS Detection**: Uses a compiled C shared library (`libpantompkins.so`) for efficient real-time signal processing (Bandpass filter, derivative, squaring, moving window integration).
+*   **Pacemaker Modes**: 
+    *   Supports single-chamber pacing logic.
+    *   includes **Rate Modulation** to adapt heart rate to simulated physical activity.
+*   **Interactive Visualization**:
+    *   Real-time scrolling ECG plot.
+    *   Visual markers for Paced beats vs. Natural beats.
+    *   Live BPM tracking vs. Target Rate.
+    *   Synchronized heart video playback.
+*   **Simulation Support**: Can run simulations against synthetic data or standard MIT-BIH arrhythmia database records.
 
+## 📂 Project Structure
 
+*   **`SILPackemaker/`**: Contains the core Python implementation of the pacemaker.
+    *   `Pacemaker.py`: Main device class handling the step-by-step simulation.
+    *   `PacingLogic.py`: Implements the timing counters and trigger logic.
+    *   `RateModulator.py`: Handles adaptive rate calculations based on sensor inputs.
+*   **`Qrs_detect/`**: C-based Digital Signal Processing module.
+    *   `panTompkins.c`: Core detection algorithm.
+    *   `r_peak.py`: Python wrapper for the compiled C library.
+*   **`heart_video_final.py`**: The primary demo script that runs the visualization.
+*   **`simulate.py`**: Script to run simulations on MIT-BIH database files.
+*   **`Assests/`**: Contains media assets for visualization (e.g., `heart2.mp4`).
 
+## 🛠️ Installation
 
+1.  **Clone the repository**:
+    ```bash
+    git clone <repository_url>
+    cd QRSPacemaker
+    ```
 
-Referecnes and Usage
+2.  **Install Dependencies**:
+    The project relies on standard scientific Python libraries.
+    ```bash
+    pip install -r requirements.txt
+    ```
+    *Key requirements: `numpy`, `matplotlib`, `opencv-python`, `wfdb`, `imageio`.*
 
-Github code for simple QRS detection is from 
-https://github.com/rafaelmmoreira/PanTompkinsQRS/blob/master/README.txt
+3.  **Build C Extension (If needed)**:
+    The project includes a precompiled `libpantompkins.so`. If you are on a different architecture (e.g., macOS vs Linux) and encounter errors, you may need to recompile the C code:
+    ```bash
+    cd Qrs_detect
+    gcc -shared -o libpantompkins.so -fPIC panTompkins.c
+    ```
 
+## 🎮 Usage
 
+### 1. Run the Heart Visualization Demo
+This is the main showcase of the project, displaying the ECG and Pacemaker status in real-time.
+```bash
+python heart_video_final.py
+```
 
+### 2. Run Simulation on MIT-BIH Data
+To test the pacemaker logic against real-world arrhythmia data:
+```bash
+python simulate.py
+```
+*(Note: Requires internet access to download MIT-BIH records via `wfdb`)*
 
-Pan, J., & Tompkins, W. J. (1985). A real-time QRS detection algorithm. IEEE Transactions on Biomedical Engineering, 32(10), 230–236. IEEE Xplore.  https://www.robots.ox.ac.uk/~gari/teaching/cdt/A3/readings/ECG/Pan+Tompkins.pdf
+## 📚 References
+
+*   **Pan-Tompkins Algorithm**: Pan, J., & Tompkins, W. J. (1985). "A real-time QRS detection algorithm." *IEEE Transactions on Biomedical Engineering*, 32(10), 230–236.
+*   **Base Implementation**: [PanTompkinsQRS by rafaelmmoreira](https://github.com/rafaelmmoreira/PanTompkinsQRS)
