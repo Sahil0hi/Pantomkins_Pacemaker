@@ -42,6 +42,8 @@ The simulation visualizes the interplay between the ECG signal, the detection al
 *   **Middle Left**: Current Pacemaker State (Sensing vs Pacing) and Mode.
 *   **Bottom Left**: Instantaneous Heart Rate tracking (Red) vs Target Rate (Purple).
 *   **Right**: Synchronized heart video animation that beats in time with the simulation.
+![Simulated VVIR Pacemaker Visualization](Assests/graph.png)
+
 
 ## Key Features
 
