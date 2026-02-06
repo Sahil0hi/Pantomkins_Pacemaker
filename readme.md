@@ -2,7 +2,7 @@
 
 This project implements a comprehensive simulation of a **VVIR Pacemaker** integrated with a real-time **Pan-Tompkins QRS detection algorithm**. It allows for the simulation of cardiac sensing, pacing logic, and rate modulation, accompanied by a rich visualization dashboard.
 
-## 🎯 Project Overview
+## Project Overview
 
 The system is designed to simulate a closed-loop biomedical device:
 1.  **Sensing**: It processes raw ECG signals to detect R-peaks (heartbeats) using a C-optimized implementation of the Pan-Tompkins algorithm.
@@ -13,7 +13,7 @@ The system is designed to simulate a closed-loop biomedical device:
     *   **R**ate Modulation (adjusts pacing rate based on simulated activity)
 3.  **Visualization**: A real-time dashboard plots the ECG trace, pacemaker status (Sensing vs. Pacing), and instantaneous heart rate, synchronized with a video animation of a beating heart.
 
-## 🔬 Methodology
+## Methodology
 
 ### 1. Pan-Tompkins QRS Detection
 The core sensing module relies on the classic Pan-Tompkins algorithm to accurately identify QRS complexes (ventricular depolarization) from the raw ECG signal. The pipeline includes:
@@ -32,7 +32,7 @@ The simulation implements a Single-Chamber Ventricular Pacemaker with Rate Respo
 *   **Refractory Periods**: After a sense or pace event, the "eye" of the pacemaker closes (Blanking Period) to avoid sensing the aftershocks of the beat.
 *   **Rate Modulation (R)**: The system takes a secondary input (simulated accelerometer data). As "activity" increases, the LRL is dynamically raised to meet metabolic demand, shortening the pacing interval.
 
-## 📊 Results
+## Results
 
 The simulation visualizes the interplay between the ECG signal, the detection algorithm, and the pacemaker's decision-making in real-time.
 
@@ -43,14 +43,14 @@ The simulation visualizes the interplay between the ECG signal, the detection al
 *   **Bottom Left**: Instantaneous Heart Rate tracking (Red) vs Target Rate (Purple).
 *   **Right**: Synchronized heart video animation that beats in time with the simulation.
 
-## 🚀 Key Features
+## Key Features
 
 *   **High-Performance QRS Detection**: Uses a compiled C shared library (`libpantompkins.so`) for efficient real-time signal processing.
 *   **Pacemaker Modes**: Supports single-chamber pacing logic with Rate Modulation.
 *   **Interactive Visualization**: Real-time scrolling ECG plot synchronized with video.
 *   **Simulation Support**: Can run simulations against synthetic data or standard MIT-BIH arrhythmia database records.
 
-## 📂 Project Structure
+## Project Structure
 
 *   **`SILPackemaker/`**: Contains the core Python implementation of the pacemaker.
     *   `Pacemaker.py`: Main device class handling the step-by-step simulation.
@@ -63,7 +63,7 @@ The simulation visualizes the interplay between the ECG signal, the detection al
 *   **`simulate.py`**: Script to run simulations on MIT-BIH database files.
 *   **`Assests/`**: Contains media assets for visualization.
 
-## 🛠️ Installation
+## Installation
 
 1.  **Clone the repository**:
     ```bash
@@ -85,7 +85,7 @@ The simulation visualizes the interplay between the ECG signal, the detection al
     gcc -shared -o libpantompkins.so -fPIC panTompkins.c
     ```
 
-## 🎮 Usage
+## Usage
 
 ### 1. Run the Heart Visualization Demo
 This is the main showcase of the project.
@@ -100,7 +100,7 @@ python simulate.py
 ```
 *(Note: Requires internet access to download MIT-BIH records via `wfdb`)*
 
-## 📚 References
+## References
 
 *   **Pan-Tompkins Algorithm**: Pan, J., & Tompkins, W. J. (1985). "A real-time QRS detection algorithm." *IEEE Transactions on Biomedical Engineering*, 32(10), 230–236.
 *   **Base Implementation**: [PanTompkinsQRS by rafaelmmoreira](https://github.com/rafaelmmoreira/PanTompkinsQRS)
